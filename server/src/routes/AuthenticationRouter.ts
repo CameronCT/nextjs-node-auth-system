@@ -20,7 +20,7 @@ const profileLoginFinalized = async (req: RequestWithJWT, res: Response, user: a
     const jwtToken = AuthenticationService.jwtCreate(user);
 
     // Tokens
-    res.cookie("userSession", jwtToken, { maxAge: Config.jwtExpiry, domain: Config.cookieUrl, secure: Config.secureRequest, });
+    res.cookie("userSession", jwtToken, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure, });
 
     // Add Logs
     if (!isUpdate)
@@ -33,7 +33,7 @@ const PassportCallback = async (req: RequestWithJWT, res: Response) => {
     const response = await profileLoginFinalized(req, res, req.user);
     if (response) {
         // Resolve
-        res.writeHead(301, { Location: Config.protocol + "://" + Config.webUrl + "/", });
+        res.writeHead(301, { Location: Config.api.secure ? 'https' : 'http' + "://" + Config.api.webUrl + "/", });
         res.end();
     } else 
         return res.status(200).send({ error: "Unable to authenticate!" });
@@ -46,10 +46,10 @@ const session = async (req: RequestWithJWT, res: Response) => {
             const generateAuthCode = UniqueIdService.generateOther("discriminator");
             const generateGuestCode = UniqueIdService.generateOther("guestId");
 
-            const createGuest = await AuthenticationService.passportFindOrCreate('Guest', String(generateAuthId), `guest[${generateGuestCode}].${generateAuthCode}@keyma.sh`, `Guest_${UniqueIdService.generateOther('discriminator')}`, `${Config.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`)
+            const createGuest = await AuthenticationService.passportFindOrCreate('Guest', String(generateAuthId), `guest[${generateGuestCode}].${generateAuthCode}@keyma.sh`, `Guest_${UniqueIdService.generateOther('discriminator')}`, `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`)
             if (createGuest) {
                 const jwtAccess = AuthenticationService.jwtCreate(createGuest);
-                res.cookie("userSession", jwtAccess, { maxAge: Config.jwtExpiry, domain: Config.cookieUrl, secure: Config.secureRequest, });
+                res.cookie("userSession", jwtAccess, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure, });
                 return res.status(200).send({ data: createGuest, token: jwtAccess, csrf: getCSRFToken(req) });
             } else
                 return res.status(200).send({error: "Unable to create Guest!"});
@@ -59,7 +59,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
 }
 
 const logout = async (_req: RequestWithJWT, res: Response) => {
-    res.clearCookie("userSession", { domain: Config.cookieUrl });
+    res.clearCookie("userSession", { domain: Config.api.cookieUrl });
     return res.status(200).send({ message: "Successfully logged out!" });
 }
 
@@ -79,7 +79,7 @@ const login = async (req: RequestWithJWT, res: Response) => {
                     `Please confirm your email address`, 
                     `
                         Welcome to ${Config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
-                        <b><a href="${Config.protocol}://${Config.webUrl}/auth/activate/${response}">${Config.protocol}://${Config.webUrl}/auth/activate/${response}</a></b><br/><br/>
+                        <b><a href="${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}">${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
                         If you have any issues or have any other questions, please contact support@keymash.io!
                     `
                 );
@@ -122,7 +122,7 @@ const signup = async (req: RequestWithJWT, res: Response) => {
             `Please confirm your email address`, 
             `
                 Welcome to ${Config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
-                <b><a href="${Config.protocol}://${Config.webUrl}/auth/activate/${response}">${Config.protocol}://${Config.webUrl}/auth/activate/${response}</a></b><br/><br/>
+                <b><a href="${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}">${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
                 If you have any issues or have any other questions, please contact support@keymash.io!
             `
         );
@@ -146,7 +146,7 @@ const sendForgot = async (req: RequestWithJWT, res: Response) => {
             `Reset your password`, 
             `
                 You have requested to reset your password, please click the link below to reset your password.<br/><br/>
-                <b><a href="${Config.protocol}://${Config.webUrl}/auth/forgot/${response}">${Config.protocol}://${Config.webUrl}/auth/forgot/${response}</a></b><br/><br/>
+                <b><a href="${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/forgot/${response}">${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/forgot/${response}</a></b><br/><br/>
                 If you did not make this request, you may contact support@keymash.io or simply ignore it.
             `
         );

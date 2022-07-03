@@ -6,7 +6,7 @@ export default async (
     subject: string,
     message: string
 ) => {
-    sgMail.setApiKey(Config.emailCredentials.privateKey || '');
+    sgMail.setApiKey(Config.emailConfiguration.privateKey || '');
 
     const messageHTML = `
         <!DOCTYPE html>

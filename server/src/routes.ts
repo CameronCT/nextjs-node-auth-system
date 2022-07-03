@@ -12,7 +12,7 @@ const start = (app: express.Express) => {
 
     // Auth
     authRouter.get("/session", useRatelimit.sessionRequest, AuthenticationRouter.session);
-    authRouter.get("/logout", useRatelimit.stateChange, AuthenticationRouter.logout);
+    authRouter.get("/logout", useRatelimit.sessionUpdate, AuthenticationRouter.logout);
 
     // Auth -> Basic
     authRouter.post("/login", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.login);

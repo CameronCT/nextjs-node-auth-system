@@ -16,17 +16,17 @@ const payload: OAuth = {
   Discord: {
     Client: "",
     Secret: "",
-    Callback: `${Config.protocol}://${Config.oauthUrl}/auth/v2/discord/callback`,
+    Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/discord/callback`,
   },
   Google: {
     Client: "",
     Secret: "",
-    Callback: `${Config.protocol}://${Config.oauthUrl}/auth/v2/google/callback`,
+    Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/google/callback`,
   },
   GitHub: {
     Client: '',
     Secret: '',
-    Callback: `${Config.protocol}://${Config.oauthUrl}/auth/v2/github/callback`,
+    Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/github/callback`,
   }
 };
 

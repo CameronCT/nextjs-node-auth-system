@@ -7,9 +7,7 @@ import mongoSanitize from 'express-mongo-sanitize';
 import generateCSRF from "./middlewares/generateCSRF";
 import corsOptions from './middlewares/corsOptions';
 import MongoSQL from "./utils/MongoSQL";
-import { SocketGlobalGameData } from './types.socket';
 import { Snowflake } from "@sapphire/snowflake";
-import socket from "./socket";
 import Config from './config';
 import routes from './routes';
 
@@ -32,24 +30,20 @@ app.use(mongoSanitize());
 // Express Middlewares
 app.use(generateCSRF);
 
-// Mongoose
+// Mongo
 new MongoSQL(process.env.MONGODB_URL ? process.env.MONGODB_URL : null, [
     'accounts', 'games', 'gameAccounts', 'queue', 'media', 'media_2023', 'mediaFlags', 'rooms', 'roomAccounts', 'serverLogging', 'playlistFavorites'
 ]);
-
-// Sockets
-socket.start();
 
 // Routes
 routes.start(app);
 
 // Initialize
-app.listen(8080, () => console.log(`Server is running in ${process.env.NODE_ENV || 'development'} for ${Config.cookieUrl} on port ${8080}`));
+app.listen(8080, () => console.log(`Server is running in ${process.env.NODE_ENV || 'development'} for ${Config.api.cookieUrl} on port ${8080}`));
 
 // Snowflake
 const Epoch = new Date(Config.createdDate);
 const snowFlake = new Snowflake(Epoch);
 
 // Exports
-export const globalGameData = {} as SocketGlobalGameData[];
 export default { snowFlake };

@@ -9,8 +9,8 @@ export default (
 ) => {
     if (!req.cookies._csrf) {
         res.cookie("_csrf", crypto.randomBytes(20).toString("hex"), {
-            maxAge: Config.jwtExpiry,
-            domain: Config.cookieUrl,
+            maxAge: Config.jwt.expiry,
+            domain: Config.api.cookieUrl,
         });
     }
     next();

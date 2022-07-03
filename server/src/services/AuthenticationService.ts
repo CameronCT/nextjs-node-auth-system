@@ -10,7 +10,7 @@ const jwtSimpleValidate = (token: string): { data: AccountSessionData } => {
     let payload;
 
     try {
-        payload = jwt.verify(token, Config.jwtSecret);
+        payload = jwt.verify(token, Config.jwt.secret);
     } catch (e) {
         payload = null;
     }
@@ -21,7 +21,7 @@ const jwtSimpleValidate = (token: string): { data: AccountSessionData } => {
 const jwtValidate = ( token: string, callback: CallbackJWT ) => {
     let payload;
     try {
-        payload = jwt.verify(token, Config.jwtSecret);
+        payload = jwt.verify(token, Config.jwt.secret);
     } catch (e) {
         if (e instanceof jwt.JsonWebTokenError) return callback(401, {});
         return callback(400, {});
@@ -30,9 +30,9 @@ const jwtValidate = ( token: string, callback: CallbackJWT ) => {
 }
 
 const jwtCreate = ( data: object ) => {
-    return jwt.sign({ data }, Config.jwtSecret, {
+    return jwt.sign({ data }, Config.jwt.secret, {
         algorithm: "HS256",
-        expiresIn: Config.jwtExpiry / 1000,
+        expiresIn: Config.jwt.expiry / 1000,
     });
 };
 
@@ -62,7 +62,7 @@ const basicSignUp = async (emailAddress: string, password: string, displayName: 
         accountId: generateId, 
         emailAddress, 
         displayName,
-        avatarSrc: `${Config.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`,
+        avatarSrc: `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`,
         authName: "Local", 
         authId: '', 
         authPassword: generatePassword, 
@@ -73,7 +73,7 @@ const basicSignUp = async (emailAddress: string, password: string, displayName: 
         const createPlayer = await MongoSQL.findOneOrCreate('accounts', {accountId: generateId}, {
             accountId: generateId, 
             displayName, 
-            avatarSrc: `${Config.protocol}://${Config.webUrl}/avatars/default.jpg`,
+            avatarSrc: `${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/avatars/default.jpg`,
             created: Math.round(new Date().getTime() / 1000)
         });
         if (createPlayer) {
@@ -127,7 +127,7 @@ const manualActivate = async (accountId: string) => {
         return null;
 };
 
-const passportFindOrCreate = async (authName: string, authId: string , emailAddress: string, displayName: string, avatarSrc: string = `${Config.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`) => {
+const passportFindOrCreate = async (authName: string, authId: string , emailAddress: string, displayName: string, avatarSrc: string = `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`) => {
     const generateId = String(UniqueIdService.generateSnowflake());
     let checkAuth;
 
