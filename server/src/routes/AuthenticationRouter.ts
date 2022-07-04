@@ -20,7 +20,7 @@ const profileLoginFinalized = async (req: RequestWithJWT, res: Response, user: a
     const jwtToken = AuthenticationService.jwtCreate(user);
 
     // Tokens
-    res.cookie("userSession", jwtToken, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure, });
+    res.cookie("accountSession", jwtToken, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure, });
 
     // Add Logs
     if (!isUpdate)
@@ -49,7 +49,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
             const createGuest = await AuthenticationService.passportFindOrCreate('Guest', String(generateAuthId), `guest[${generateGuestCode}].${generateAuthCode}@keyma.sh`, `Guest_${UniqueIdService.generateOther('discriminator')}`, `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`)
             if (createGuest) {
                 const jwtAccess = AuthenticationService.jwtCreate(createGuest);
-                res.cookie("userSession", jwtAccess, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure, });
+                res.cookie("accountSession", jwtAccess, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure, });
                 return res.status(200).send({ data: createGuest, token: jwtAccess, csrf: getCSRFToken(req) });
             } else
                 return res.status(200).send({error: "Unable to create Guest!"});
@@ -59,7 +59,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
 }
 
 const logout = async (_req: RequestWithJWT, res: Response) => {
-    res.clearCookie("userSession", { domain: Config.api.cookieUrl });
+    res.clearCookie("accountSession", { domain: Config.api.cookieUrl });
     return res.status(200).send({ message: "Successfully logged out!" });
 }
 
