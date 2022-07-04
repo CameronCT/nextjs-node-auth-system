@@ -1,3 +1,4 @@
+import { Response } from 'express';
 import MongoSQL from "../utils/MongoSQL";
 import serverLog from "../utils/serverLog";
 
@@ -27,4 +28,11 @@ const measurableAction = async (action: () => Promise<any[]>, collection: string
         return null;
 }
 
-export default { error, measurableAction };
+const send = (res: Response, statusCode: number = 418, message: string | null = "ok", data: any = null) => 
+    res.status(statusCode).send({
+        status: statusCode || 418,
+        message: message || "ok",
+        data: data || null
+    })
+
+export default { error, measurableAction, send };
