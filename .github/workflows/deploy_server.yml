@@ -1,0 +1,36 @@
+name: Server Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ['self-hosted', 'Linux', 'X64']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+
+      - name: Install PM2
+        run: npm install pm2@latest -g
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./server
+
+      - name: Run the server app
+        run: |
+          pm2 start ecosystem.config.js --env production
+        working-directory: ./server
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+          MONGODB_URL: ${{ secrets.MONGODB_URL }}
+          EMAIL_PUBLIC: ${{ secrets.EMAIL_PUBLIC }}
+          EMAIL_PRIVATE: ${{ secrets.EMAIL_PRIVATE }}
+          OAUTH_DISCORD: ${{ secrets.OAUTH_DISCORD }}
+          OAUTH_GOOGLE: ${{ secrets.OAUTH_GOOGLE }}
+          OAUTH_GITHUB: ${{ secrets.OAUTH_GITHUB }}

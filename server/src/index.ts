@@ -32,7 +32,8 @@ app.use(generateCSRF);
 
 // Mongo
 new MongoSQL(process.env.MONGODB_URL ? process.env.MONGODB_URL : null, [
-    'accounts', 'games', 'gameAccounts', 'queue', 'media', 'media_2023', 'mediaFlags', 'rooms', 'roomAccounts', 'serverLogging', 'playlistFavorites'
+    'accounts', 'accountLogs',
+    'serverLogging'
 ]);
 
 // Routes

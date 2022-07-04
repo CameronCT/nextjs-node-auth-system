@@ -38,7 +38,7 @@ const Config: ConfigProps = {
     },
     jwt: {
         secret: process.env.JWT_SECRET || 'test_secret',
-        expiry: Number(process.env.JWT_EXPIRY || 60 * 60 * 24 * 7),
+        expiry: (60 * 60 * 24 * 7),
     },
     emailConfiguration: {
         type: 'sendgrid',
