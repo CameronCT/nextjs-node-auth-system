@@ -28,9 +28,9 @@ const measurableAction = async (action: () => Promise<any[]>, collection: string
         return null;
 }
 
-const send = (res: Response, statusCode: number = 418, message: string | null = "ok", data: any = null) => 
+const send = (res: Response, message: string | null = "ok", data: any = null, statusCode: number = 200) => 
     res.status(statusCode).send({
-        status: statusCode || 418,
+        status: statusCode || 200,
         message: message || "ok",
         data: data || null
     })

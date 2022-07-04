@@ -19,7 +19,8 @@ const updateAccessToken = (token: string) => {
     if (!isServerRequest) {
         console.log('Called updateAccessToken: ', token.substring(-5, 5));
         axios.defaults.headers.common['X-Authentication-Token'] = token;
-        localStorage?.setItem('accountSession', token);
+
+        // Unsafe: localStorage?.setItem('accountSession', token);
     }
 }
 
@@ -37,7 +38,7 @@ const updateCSRFToken = (token: string) => {
     if (!isServerRequest) {
         console.log('Called updateCSRFToken: ', token.substring(-5, 5));
         axios.defaults.headers.common['X-CSRF-Token'] = token;
-        localStorage.setItem('_csrf', token);
+        // Unsafe: localStorage.setItem('_csrf', token);
     }
 }
 
