@@ -11,7 +11,7 @@ const update = async (req: RequestWithJWT, res: Response) => {
     if (!req.jwtSession?.accountId)
         return AppService.send(res, "Invalid session!", null, 422);
 
-    if (!displayName.trim() || !Validate.isAlphaNumerical(displayName) || !displayName || displayName.length <= 2 || displayName.length >= 16 || displayName.includes('%'))
+    if (!Validate.isLegalUsername(displayName))
         return AppService.send(res, "Your display name must be less than 16 characters, greater than 2 characters and doesn't contain a % symbol!", null, 422);
 
     const response = await AccountService.update(String(req.jwtSession?.accountId), displayName, avatarSrc);
