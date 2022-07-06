@@ -30,6 +30,10 @@ const jwtValidate = ( token: string, callback: CallbackJWT ) => {
 }
 
 const jwtCreate = ( data: object ) => {
+    console.log({
+        algorithm: "HS256",
+        expiresIn: Config.jwt.expiry / 1000,
+    });
     return jwt.sign({ data }, Config.jwt.secret, {
         algorithm: "HS256",
         expiresIn: Config.jwt.expiry / 1000,
@@ -54,8 +58,7 @@ const basicLogin = async (emailAddress: string, password: string) => {
 const basicSignUp = async (emailAddress: string, password: string, displayName: string) => {
     let useAuth;
     const generateId = String(UniqueIdService.generateSnowflake());
-    //const generateActivation = await UniqueIdService.generateUUID();
-    const generateActivation = 'Yes';
+    const generateActivation = await UniqueIdService.generateUUID();
     const generatePassword = bcrypt.hashSync(password, 10);
 
     useAuth = await MongoSQL.insertOne('accounts', { 
@@ -66,7 +69,7 @@ const basicSignUp = async (emailAddress: string, password: string, displayName: 
         authName: "Local", 
         authId: '', 
         authPassword: generatePassword, 
-        activationCode: (generateActivation !== 'Yes' ? generateActivation : '') 
+        activationCode: (Config.options.enableActivation ? generateActivation : '') 
     }).catch((e) => AppService.error('service', e));
 
     if (useAuth) {
@@ -127,6 +130,21 @@ const manualActivate = async (accountId: string) => {
         return null;
 };
 
+const guestCreate = async () => {
+    const generateAuthId = UniqueIdService.generateOther("accountId");
+    const generateAuthCode = UniqueIdService.generateOther("discriminator");
+    const generateGuestCode = UniqueIdService.generateOther("guestId");
+
+    const createGuest = await passportFindOrCreate('Guest', String(generateAuthId), `guest[${generateGuestCode}].${generateAuthCode}@guest.com`, `Guest_${UniqueIdService.generateOther('discriminator')}`, `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`)
+    if (createGuest) {
+        return {
+            data: createGuest,
+            token: jwtCreate(createGuest) || ''
+        }
+    } else 
+        return null;
+}
+
 const passportFindOrCreate = async (authName: string, authId: string , emailAddress: string, displayName: string, avatarSrc: string = `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`) => {
     const generateId = String(UniqueIdService.generateSnowflake());
     let checkAuth;
@@ -146,4 +164,4 @@ const passportFindOrCreate = async (authName: string, authId: string , emailAddr
         return null;
 }
 
-export default { jwtCreate, jwtSimpleValidate, jwtValidate, getByAccountId, passportFindOrCreate, basicEmailExists, basicLogin, basicSignUp, basicActivate, basicSendActivate, basicForgot, basicSendForgot, manualActivate };
+export default { jwtCreate, jwtSimpleValidate, jwtValidate, getByAccountId, passportFindOrCreate, guestCreate, basicEmailExists, basicLogin, basicSignUp, basicActivate, basicSendActivate, basicForgot, basicSendForgot, manualActivate };

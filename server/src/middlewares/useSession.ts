@@ -1,5 +1,6 @@
 
 import {NextFunction, Response} from "express";
+import AppService from "../services/AppService";
 import AuthenticationService from "../services/AuthenticationService";
 import { RequestWithJWT } from "../types";
 import getSessionToken from "../utils/getSessionToken";
@@ -10,5 +11,5 @@ export default (req: RequestWithJWT, res: Response, next: NextFunction) => {
         req.jwtSession = getSession.data;
         next();
     } else 
-        return res.status(200).send({ error: "Invalid session!" });
+        return AppService.send(res, "Invalid session!", null, 422);
 }

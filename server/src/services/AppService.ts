@@ -35,4 +35,7 @@ const send = (res: Response, message: string | null = "ok", data: any = null, st
         data: data || null
     })
 
-export default { error, measurableAction, send };
+const sendDefault = (res: Response, data: any = null, statusCode: number = 200) => 
+    res.status(statusCode).send(data);
+
+export default { error, measurableAction, send, sendDefault };

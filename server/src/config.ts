@@ -1,6 +1,11 @@
 
 interface ConfigProps {
     name: string;
+    emailAddress: string;
+    options: {
+        enableGuests: boolean;
+        enableActivation: boolean;
+    };
     api: {
         secure: boolean;
         cors: string[];
@@ -25,6 +30,11 @@ interface ConfigProps {
 
 const Config: ConfigProps = {
     name: 'My First App',
+    emailAddress: 'support@example.io',
+    options: {
+        enableGuests: true,
+        enableActivation: true,
+    },
     api: {
         secure: process.env.NODE_ENV === 'production',
         cors: process.env.NODE_ENV !== 'production'
@@ -38,7 +48,7 @@ const Config: ConfigProps = {
     },
     jwt: {
         secret: process.env.JWT_SECRET || 'test_secret',
-        expiry: (60 * 60 * 24 * 7),
+        expiry: Math.round(60 * 60 * 24 * 7) * 1000,
     },
     emailConfiguration: {
         type: 'sendgrid',
