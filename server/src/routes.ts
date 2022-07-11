@@ -16,7 +16,7 @@ const start = (app: express.Express) => {
 
     // Auth -> Basic
     authRouter.post("/login", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.login);
-    authRouter.post("/signup", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.signup);
+    authRouter.post("/register", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.signup);
     authRouter.post("/forgot", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.forgot);
     authRouter.post("/activate", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.activate);
     authRouter.post("/sendForgot", useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.sendForgot);

@@ -30,10 +30,6 @@ const jwtValidate = ( token: string, callback: CallbackJWT ) => {
 }
 
 const jwtCreate = ( data: object ) => {
-    console.log({
-        algorithm: "HS256",
-        expiresIn: Config.jwt.expiry / 1000,
-    });
     return jwt.sign({ data }, Config.jwt.secret, {
         algorithm: "HS256",
         expiresIn: Config.jwt.expiry / 1000,

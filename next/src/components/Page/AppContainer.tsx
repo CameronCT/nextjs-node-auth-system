@@ -1,16 +1,17 @@
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import LoadContent from '../Page/LoadContent';
 import useGoogleAnalytics from '../../hooks/useGoogleAnalytics';
-import dynamic from 'next/dynamic';
+import Navbar from '../Navbar';
 
 type IMainProps = {
   meta: ReactNode;
   children: ReactNode;
   isLoaded?: boolean;
   noAnimate?: boolean;
+  noNavbar?: boolean;
 };
 
-const Base = (props: IMainProps) => {
+const AppContainer = (props: IMainProps) => {
   useGoogleAnalytics();
 
   const timer = useRef<NodeJS.Timeout | null>(null);
@@ -30,6 +31,7 @@ const Base = (props: IMainProps) => {
     <>
       {props.meta}
       <main>
+        {!props.noNavbar ? <Navbar /> : ''}
         <LoadContent isLoaded={loaded}>
           {props.children}
         </LoadContent>
@@ -40,4 +42,4 @@ const Base = (props: IMainProps) => {
   );
 };
 
-export default Base;
+export default AppContainer;
