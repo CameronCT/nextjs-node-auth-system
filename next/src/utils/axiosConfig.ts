@@ -5,4 +5,6 @@ axios.defaults.headers.common['X-Authentication-Token'] = Authentication.getAcce
 axios.defaults.headers.common['X-CSRF-Token'] = Authentication.getCSRFToken();
 axios.defaults.withCredentials = true;
 
+export const AxiosAbortController = new AbortController();
+
 export default axios;

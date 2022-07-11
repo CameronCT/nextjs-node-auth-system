@@ -1,5 +1,5 @@
 import Cookies from "universal-cookie";
-import axios from 'axios';
+import axios from './axiosConfig';
 
 const cookies = new Cookies();
 
@@ -17,10 +17,9 @@ const getAccessToken = () => {
 
 const updateAccessToken = (token: string) => {
     if (!isServerRequest) {
-        console.log('Called updateAccessToken: ', token.substring(-5, 5));
+        console.log('Called updateAccessToken: ', token.substring(0, 5));
         axios.defaults.headers.common['X-Authentication-Token'] = token;
-
-        // Unsafe: localStorage?.setItem('accountSession', token);
+        localStorage?.setItem('accountSession', token);
     }
 }
 
@@ -38,7 +37,7 @@ const updateCSRFToken = (token: string) => {
     if (!isServerRequest) {
         console.log('Called updateCSRFToken: ', token.substring(-5, 5));
         axios.defaults.headers.common['X-CSRF-Token'] = token;
-        // Unsafe: localStorage.setItem('_csrf', token);
+        localStorage.setItem('_csrf', token);
     }
 }
 

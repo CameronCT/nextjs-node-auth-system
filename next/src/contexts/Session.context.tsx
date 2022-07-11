@@ -1,29 +1,25 @@
-import { FC, useState, createContext, useContext, useEffect, useRef, useCallback, ReactNode } from 'react';
-import axios, { CancelTokenSource } from 'axios';
+import { useState, createContext, useContext, useEffect, useCallback, ReactNode } from 'react';
+import axios from '../utils/axiosConfig';
 import Config from '../Config';
 import Authentication from '../utils/Authentication';
 import { AccountSessionData } from '../types';
-import { toast } from 'react-toastify';
 
 interface ContextType {
   sessionData: AccountSessionData | null;
   setSessionData: (user: AccountSessionData | null) => void;
   getSessionData: () => void;
   resetSessionData: () => void;
+  authSessionData: (token?: string, csrf?: string) => void;
 }
 
 export const SessionContext = createContext<ContextType | null>(null);
 
 export const SessionProvider = ({ children }: { children: ReactNode }) => {
-  const axiosCancelSource = useRef<CancelTokenSource | null>(null);
 
   const [sessionData, setSessionData] = useState<AccountSessionData | null>(null);
 
   const getSessionData = useCallback(async () => {
-    const response = await axios.get(`${Config.authUrl}/session`, {
-      withCredentials: true,
-      cancelToken: axiosCancelSource.current?.token,
-    });
+    const response = await axios.get(`${Config.authUrl}/session`);
     const data = await response.data;
     const getData = data.data;
     setSessionData(getData);
@@ -33,10 +29,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const resetSessionData = useCallback(async () => {
-    const response = await axios.get(`${Config.authUrl}/logout`, {
-      withCredentials: true,
-      cancelToken: axiosCancelSource.current?.token,
-    });
+    const response = await axios.get(`${Config.authUrl}/logout`);
 
     if (response && response.status === 200) {
       Authentication.updateAccessToken('');
@@ -44,10 +37,14 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [ getSessionData ]);
 
+  const authSessionData = useCallback((token: string = '', csrf: string = '') => {
+      Authentication.updateAccessToken(token);
+      Authentication.updateCSRFToken(csrf);
+      getSessionData();
+  }, [ getSessionData ]);
+
   useEffect(() => {
-    axiosCancelSource.current = axios.CancelToken.source();
     getSessionData();
-    return () => axiosCancelSource.current?.cancel();
   }, [getSessionData]);
 
   return (
@@ -57,6 +54,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
         setSessionData,
         getSessionData,
         resetSessionData,
+        authSessionData,
       }}
     >
       {children}

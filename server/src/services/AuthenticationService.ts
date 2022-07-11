@@ -61,7 +61,7 @@ const basicSignUp = async (emailAddress: string, password: string, displayName: 
         accountId: generateId, 
         emailAddress, 
         displayName,
-        avatarSrc: `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`,
+        avatarSrc: `${Config.api.filesUrl}/avatars/avatar.jpg`,
         authName: "Local", 
         authId: '', 
         authPassword: generatePassword, 

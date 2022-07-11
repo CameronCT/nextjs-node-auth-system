@@ -43,7 +43,7 @@ const Config: ConfigProps = {
         webUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
         apiUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
         oauthUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
-        cookieUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
+        cookieUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'localhost',
         filesUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
     },
     jwt: {

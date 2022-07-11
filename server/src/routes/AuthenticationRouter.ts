@@ -52,7 +52,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
             } else 
                 return AppService.send(res, "Unable to authenticate!", null, 422);
         } else 
-            return AppService.send(res, "ok", { ...data, token: getSessionToken(req), csrf: getCSRFToken(req) });
+            return AppService.sendDefault(res, { ...data, token: getSessionToken(req), csrf: getCSRFToken(req) });
     });
 }
 
@@ -123,7 +123,9 @@ const signup = async (req: RequestWithJWT, res: Response) => {
                     If you have any issues or have any other questions, please contact ${Config.emailAddress}!
                 `
             );
-            return AppService.send(res, "Your account has been created, please check your email inside of your inbox or spam/junk folder for a confirmation email!");
+            return AppService.send(res, Config.options.enableActivation ? "Your account has been created, please check your email inside of your inbox or spam/junk folder for a confirmation email!" : "Your account has been created!", {
+                enableActivation: Config.options.enableActivation
+            });
         }
         return AppService.send(res, "Your account has been created, you may now login!");
     } else
@@ -192,7 +194,7 @@ const activate = async (req: RequestWithJWT, res: Response) => {
         const getProfile = await AuthenticationService.getByAccountId(response);
         const setProfile = await profileLoginFinalized(req, res, getProfile);
         if (setProfile) 
-            return AppService.send(res, "ok", { token: setProfile, csrf: getCSRFToken(req) }, 422);
+            return AppService.send(res, "ok", { token: setProfile, csrf: getCSRFToken(req) });
         else 
             return AppService.send(res, "Unable to authenticate!", null, 422);
     } else
