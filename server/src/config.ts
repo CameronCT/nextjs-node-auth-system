@@ -40,7 +40,7 @@ const Config: ConfigProps = {
         cors: process.env.NODE_ENV !== 'production'
             ? [ 'http://localhost:3000' ]
             : [ 'https://example.io' ],
-        webUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
+        webUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:3000',
         apiUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
         oauthUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'http://localhost:8080',
         cookieUrl: process.env.NODE_ENV === "production" ? 'https://example.io' : 'localhost',

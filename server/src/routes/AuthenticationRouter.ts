@@ -33,7 +33,7 @@ const PassportCallback = async (req: RequestWithJWT, res: Response) => {
     const response = await profileLoginFinalized(req, res, req.user);
     if (response) {
         // Resolve
-        res.writeHead(301, { Location: Config.api.secure ? 'https' : 'http' + "://" + Config.api.webUrl + "/", });
+        res.writeHead(301, { Location: Config.api.webUrl + "/", });
         res.end();
     } else 
         return AppService.send(res, "Unable to authenticate!", null, 422);
