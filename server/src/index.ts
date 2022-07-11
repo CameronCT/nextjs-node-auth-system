@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from "dotenv";
-import passport from 'passport';
 import cookieParser from 'cookie-parser';
 import mongoSanitize from 'express-mongo-sanitize';
 import generateCSRF from "./middlewares/generateCSRF";
@@ -11,6 +10,7 @@ import { Snowflake } from "@sapphire/snowflake";
 import Config from './config';
 import routes from './routes';
 import path from 'path';
+import passport from './passport';
 
 dotenv.config();
 console.log(process.env.MONGODB_URL);
@@ -21,7 +21,6 @@ if (process.env.NODE_ENV !== "production") process.env.NODE_ENV = "development";
 if (process.env.NODE_ENV === 'production') app.set('trust proxy', '1');
 
 // App
-app.use(passport.initialize());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +35,9 @@ new MongoSQL(process.env.MONGODB_URL ? process.env.MONGODB_URL : null, [
     'accounts', 'accountLogs',
     'serverLogging'
 ]);
+
+// Passport
+passport.start(app)
 
 // Routes
 routes.start(app);

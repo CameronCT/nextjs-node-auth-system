@@ -35,6 +35,11 @@
     "express-rate-limit": "^5.3.0",
     "jsonwebtoken": "^8.5.1",
     "passport": "^0.4.1",
+    "passport-discord": "^0.1.4",
+    "passport-github2": "^0.1.12",
+    "passport-google-oauth": "^2.0.0",
+    "passport-twitter": "^1.0.4",
+    "remove-accents": "^0.4.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -50,6 +55,9 @@
     "@types/uuid": "^8.3.1",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
+    "@types/passport-discord": "^0.1.5",
+    "@types/passport-github2": "^1.2.5",
+    "@types/passport-google-oauth": "^1.0.42",
     "eslint": "^8.0.1",
     "eslint-plugin-jsdoc": "^36.1.1",
     "eslint-plugin-prefer-arrow": "^1.2.3",

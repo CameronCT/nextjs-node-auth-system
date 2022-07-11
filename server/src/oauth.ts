@@ -1,4 +1,6 @@
 import Config from "./config";
+import dotenv from "dotenv";
+dotenv.config();
 
 export interface OAuthParameters {
   Client: string;
@@ -14,18 +16,18 @@ export interface OAuth {
 
 const payload: OAuth = {
   Discord: {
-    Client: "",
-    Secret: String(process.env.OAUTH_DISCORD),
+    Client: "123",
+    Secret: String(process.env.OAUTH_DISCORD || ''),
     Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/discord/callback`,
   },
   Google: {
-    Client: "",
-    Secret: String(process.env.OAUTH_GOOGLE),
+    Client: "123",
+    Secret: String(process.env.OAUTH_GOOGLE || ''),
     Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/google/callback`,
   },
   GitHub: {
-    Client: '',
-    Secret: String(process.env.OAUTH_GITHUB),
+    Client: "123",
+    Secret: String(process.env.OAUTH_GITHUB || ''),
     Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/github/callback`,
   }
 };
