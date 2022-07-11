@@ -18,17 +18,17 @@ const payload: OAuth = {
   Discord: {
     Client: "123",
     Secret: String(process.env.OAUTH_DISCORD || ''),
-    Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/discord/callback`,
+    Callback: `${Config.api.oauthUrl}/auth/discord/callback`,
   },
   Google: {
     Client: "123",
     Secret: String(process.env.OAUTH_GOOGLE || ''),
-    Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/google/callback`,
+    Callback: `${Config.api.oauthUrl}/auth/google/callback`,
   },
   GitHub: {
     Client: "123",
     Secret: String(process.env.OAUTH_GITHUB || ''),
-    Callback: `${Config.api.secure ? 'https' : 'http'}://${Config.api.oauthUrl}/auth/github/callback`,
+    Callback: `${Config.api.oauthUrl}/auth/github/callback`,
   }
 };
 
