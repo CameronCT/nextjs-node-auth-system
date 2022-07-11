@@ -4,19 +4,29 @@
 
 @import url('./auth.css');
 @import url('./form.css');
+@import url('./heading.css');
 
 body {
   @apply font-sans;
 }
 
 .tw-container {
-  @apply max-w-screen-xl mx-auto px-10;
+  @apply max-w-screen-xl mx-auto px-6;
 }
 
 .tw-vertical {
   @apply flex h-screen items-center justify-center;
 }
 
-a:not(.button) {
+.tw-padding {
+  @apply py-8;
+}
+
+.tw-margin {
+  @apply my-8;
+}
+
+a:not(.button),
+button:not(.button) {
   @apply hover:opacity-80 transition ease-in-out duration-300;
 }

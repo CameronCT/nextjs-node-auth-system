@@ -61,7 +61,7 @@ const basicSignUp = async (emailAddress: string, password: string, displayName: 
         accountId: generateId, 
         emailAddress, 
         displayName,
-        avatarSrc: `${Config.api.filesUrl}/avatars/avatar.jpg`,
+        avatarSrc: `${Config.api.filesUrl}/avatars/default.png`,
         authName: "Local", 
         authId: '', 
         authPassword: generatePassword, 
@@ -72,7 +72,7 @@ const basicSignUp = async (emailAddress: string, password: string, displayName: 
         const createPlayer = await MongoSQL.findOneOrCreate('accounts', {accountId: generateId}, {
             accountId: generateId, 
             displayName, 
-            avatarSrc: `${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/avatars/default.jpg`,
+            avatarSrc: `${Config.api.secure ? 'https' : 'http'}://${Config.api.filesUrl}/avatars/default.png`,
             created: Math.round(new Date().getTime() / 1000)
         });
         if (createPlayer) {
@@ -131,7 +131,7 @@ const guestCreate = async () => {
     const generateAuthCode = UniqueIdService.generateOther("discriminator");
     const generateGuestCode = UniqueIdService.generateOther("guestId");
 
-    const createGuest = await passportFindOrCreate('Guest', String(generateAuthId), `guest[${generateGuestCode}].${generateAuthCode}@guest.com`, `Guest_${UniqueIdService.generateOther('discriminator')}`, `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`)
+    const createGuest = await passportFindOrCreate('Guest', String(generateAuthId), `guest[${generateGuestCode}].${generateAuthCode}@guest.com`, `Guest_${UniqueIdService.generateOther('discriminator')}`, `${Config.api.filesUrl}/avatars/default.png`)
     if (createGuest) {
         return {
             data: createGuest,
@@ -141,7 +141,7 @@ const guestCreate = async () => {
         return null;
 }
 
-const passportFindOrCreate = async (authName: string, authId: string , emailAddress: string, displayName: string, avatarSrc: string = `${Config.api.filesUrl}/avatars/avatar_${Math.floor(Math.random() * 12)}.jpg`) => {
+const passportFindOrCreate = async (authName: string, authId: string , emailAddress: string, displayName: string, avatarSrc: string = `${Config.api.filesUrl}/avatars/default.png`) => {
     const generateId = String(UniqueIdService.generateSnowflake());
     let checkAuth;
 

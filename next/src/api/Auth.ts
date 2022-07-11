@@ -60,10 +60,4 @@ const recoveryPassword = async (emailAddress: string, password: string, key: str
   return response?.data || null;
 };
 
-const logout = async (): Promise<AxiosResponse | null> => {
-  const response = await axios.post(`${Config.authUrl}/auth/logout`, {}).catch((e) => toast.error(e.response.data.message))
-  // @ts-ignore
-  return response?.data || null;
-};
-
-export default { login, register, activate, logout, recoveryForgot, recoveryPassword };
+export default { login, register, activate, recoveryForgot, recoveryPassword };

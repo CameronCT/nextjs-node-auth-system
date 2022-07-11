@@ -10,6 +10,7 @@ import MongoSQL from "./utils/MongoSQL";
 import { Snowflake } from "@sapphire/snowflake";
 import Config from './config';
 import routes from './routes';
+import path from 'path';
 
 dotenv.config();
 console.log(process.env.MONGODB_URL);
@@ -38,6 +39,10 @@ new MongoSQL(process.env.MONGODB_URL ? process.env.MONGODB_URL : null, [
 
 // Routes
 routes.start(app);
+
+// CDN for Developers
+if (process.env.NODE_ENV === 'development') 
+    app.use('/', express.static(path.join(__dirname, 'public')))
 
 // Initialize
 app.listen(8080, () => console.log(`Server is running in ${process.env.NODE_ENV || 'development'} for ${Config.api.cookieUrl} on port ${8080}`));

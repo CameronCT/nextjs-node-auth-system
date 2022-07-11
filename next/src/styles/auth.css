@@ -1,5 +1,5 @@
 ._authForm {
-    @apply relative block w-96 mx-auto bg-white border p-5 rounded-lg shadow-lg;
+    @apply relative block w-96 mx-auto bg-white border p-6 rounded-lg shadow-lg;
 }
 
 ._authForm h1 {
