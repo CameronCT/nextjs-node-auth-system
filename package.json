@@ -1,0 +1,30 @@
+{
+  "name": "nextjs-node-auth-system",
+  "version": "1.0.0",
+  "description": "Starter Script that includes Next, Node, Express, MongoDB and features a basic authentication system with emails and more.",
+  "main": "index.js",
+  "scripts": {
+    "install:mac": "sh ./bin/install.sh",
+    "install:linux": "sh ./bin/install.sh",
+    "install:win": ".\\bin\\install.cmd",
+    "dev:next": "cd next && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "concurrently --kill-others \"npm run dev:server\" \"npm run dev:next\"",
+    "prettier:next": "cd next && npm run prettier",
+    "prettier:server": "cd server && npm run prettier",
+    "prettier": "concurrently \"npm run prettier:next\" \"npm run prettier:server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CameronCT/nextjs-node-auth-system.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/CameronCT/nextjs-node-auth-system/issues"
+  },
+  "homepage": "https://github.com/CameronCT/nextjs-node-auth-system#readme",
+  "devDependencies": {
+    "concurrently": "^7.2.2"
+  }
+}
