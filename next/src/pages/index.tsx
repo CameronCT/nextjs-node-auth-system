@@ -11,7 +11,6 @@ const Page = () => {
                 <h1>Home</h1>
                 <p className="mt-4 text-lg">
                     Welcome to <strong>nextjs-node-auth-system</strong>! This is an <span className="font-semibold text-indigo-500">open source</span> project created by CameronCT.
-                    
                 </p>
             </div>
         </AppContainer>
