@@ -1,12 +1,8 @@
-import sgMail from "@sendgrid/mail";
-import Config from "../config";
+import sgMail from '@sendgrid/mail'
+import Config from '../config'
 
-export default async (
-    to: string,
-    subject: string,
-    message: string
-) => {
-    sgMail.setApiKey(Config.emailConfiguration.privateKey || '');
+export default async (to: string, subject: string, message: string) => {
+    sgMail.setApiKey(Config.emailConfiguration.privateKey || '')
 
     const messageHTML = `
         <!DOCTYPE html>
@@ -56,20 +52,20 @@ export default async (
             </table>
         </body>
         </html>
-    `;
+    `
 
     const msgOptions = {
         to,
         from: Config.emailConfiguration.from,
         subject,
         text: message,
-        html: `${messageHTML}`
-    };
+        html: `${messageHTML}`,
+    }
 
     try {
-        await sgMail.send(msgOptions);
-    } catch(error) {
+        await sgMail.send(msgOptions)
+    } catch (error) {
         // @ts-ignore
         console.log(`[SendGrid] Error sending email: ${error.response.body.errors[0].message || 'unknown'}`)
-    }   
+    }
 }
