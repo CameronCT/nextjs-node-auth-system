@@ -6,9 +6,13 @@ Starter Script that includes Next, Node, Express & MongoDB and features a basic 
 - OAuth Support for Discord, GitHub and Google
 - Email/Password Authentication
 - Session Management with JWT
+- - Optional Guest Account Support
 - Email Support via SendGrid
 - Built in configured Nextjs frontend
 - Built-in components & contexts for Authentication
+- - Including client-side error handling
+- Built-in SEO Support
+- Included Google Analytics tracking
 - Included Tailwind v3 with PostCSS
 - Netlify deployment configured
 - Pre-configured Prettier and ESLint
@@ -35,6 +39,20 @@ npm run install:mac
 npm run install:linux
 ```
 
+## Configuration
+### Backend
+There are two files that are necessary for configuration. The first one is the general environmental file.
+You will want to create a copy of `./server/.env.example` to `./server/.env` and modify however you desire.
+
+One you configure your environmental variables, the next step is the core configuration file that will give you a few options but mainly just configuration for the name and forms of routing.
+
+`./server/src/config.ts`
+
+There is quite a few options, most however should be self-explanatory. If a contributor wants to help expand on this then they can feel free to do so.
+
+### Next / Frontend
+You can modify the configuration at `./next/src/Config.ts` - again the options are self explanatory however a contributor may feel free to expand on this if they want to.
+
 ## Development
 Once the prerequisites are installed and the base depedencies are installed. You can easily start the server and frontend via:
 ```sh
@@ -49,7 +67,10 @@ npm run dev:next
 ```
 
 ## Deployment
-There is a lot of online guides that can help in this area. However below is some information on what we have pre-configured for you and the next steps. That being said, **if you are not experienced** in deployment or CI/CD then this may not be as easy to understand.
+There is a lot of online guides that can help in this area. However below is some information on what we have pre-configured for you and the next steps. That being said, **if you are not experienced in deployment or CI/CD** then this may not be as easy to understand.
+
+### Environmental Variables
+PM2 and GitHub Actions is already pre-configured to work with **GitHub Secrets** so if you so desire you can use that. Otherwise you can create a script that will pre-generate a `./server/.env` file as well.
 
 ### CI/CD
 This is the only part **we can't** do for you, you will need to create a self-hosted runner and follow the steps provided by GitHub.
