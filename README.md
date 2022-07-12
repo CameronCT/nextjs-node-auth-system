@@ -1,6 +1,20 @@
 # Next, Node & Auth System
 Starter Script that includes Next, Node, Express & MongoDB and features a basic authentication system with emails and more.
 
+- [Next, Node & Auth System](#next-node--auth-system)
+  - [Features](#features)
+  - [Prerequisites](#prerequisites)
+  - [Setup](#setup)
+  - [Configuration](#configuration)
+    - [Backend](#backend)
+    - [Next / Frontend](#next--frontend)
+  - [Development](#development)
+  - [Deployment](#deployment)
+    - [Environmental Variables](#environmental-variables)
+    - [CI/CD](#cicd)
+    - [Nginx Reverse Proxy](#nginx-reverse-proxy)
+  - [Roadmap / Todo](#roadmap--todo)
+
 ## Features
 - Easy configuration for both Front and Backend
 - OAuth Support for Discord, GitHub and Google
