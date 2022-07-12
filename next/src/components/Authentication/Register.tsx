@@ -62,9 +62,9 @@ const Register = () => {
                     <div className="flex flex-wrap justify-center lg:justify-between space-x-2">
                         <button type="submit">Submit</button>
                     </div>
-                    <Link to="/auth/forgot-password" className="text-center">Forgot Password?</Link>
+                    <Link to="/auth/forgot/send" className="text-center">Forgot Password?</Link>
                 </form>
-                <Link to="/auth/register" className="absolute left-0 right-0 -bottom-12 text-center">Don't have an account?</Link>
+                <Link to="/auth/login" className="absolute left-0 right-0 -bottom-12 text-center">Already have an account?</Link>
             </div>
         </div>
     )
