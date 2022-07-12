@@ -18,7 +18,7 @@
     "type": "git",
     "url": "git+https://github.com/CameronCT/nextjs-node-auth-system.git"
   },
-  "author": "",
+  "author": "CameronCT",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/CameronCT/nextjs-node-auth-system/issues"
