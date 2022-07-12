@@ -1,7 +1,7 @@
 # Next, Node & Auth System
 Starter Script that includes Next, Node, Express & MongoDB and features a basic authentication system with emails and more.
 
-- [Next, Node & Auth System](#next-node--auth-system)
+## Table of Contents
   - [Features](#features)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
