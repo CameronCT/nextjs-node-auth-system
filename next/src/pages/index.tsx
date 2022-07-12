@@ -3,10 +3,7 @@ import { Meta } from '../components/Page/Meta'
 
 const Page = () => {
     return (
-        <AppContainer 
-          meta={<Meta title="Home" />}   
-          isLoaded
-        >
+        <AppContainer meta={<Meta title="Home" />} isLoaded>
             <div className="tw-container tw-padding">
                 <h1>Home</h1>
                 <p className="mt-4 text-lg">

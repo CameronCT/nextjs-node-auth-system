@@ -1,37 +1,36 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
-import Loading from '../Utils/Loading';
+import { ReactNode, useEffect, useRef, useState } from 'react'
+import Loading from '../Utils/Loading'
 
 interface LoadContentProps {
-  isLoaded: boolean;
-  isPartial?: boolean;
-  children: ReactNode;
-  disableTransform?: boolean;
+    isLoaded: boolean
+    isPartial?: boolean
+    children: ReactNode
+    disableTransform?: boolean
 }
 
 const LoadContent = (props: LoadContentProps) => {
-  const { isLoaded } = props;
+    const { isLoaded } = props
 
-  const clearInterval = useRef<NodeJS.Timeout | null>(null);
-  const [mountTranslate, setMountTranslate] = useState<boolean>(true);
+    const clearInterval = useRef<NodeJS.Timeout | null>(null)
+    const [mountTranslate, setMountTranslate] = useState<boolean>(true)
 
-  useEffect(() => {
-    if (!clearInterval.current) clearInterval.current = setTimeout(() => setMountTranslate(false), 300);
+    useEffect(() => {
+        if (!clearInterval.current) clearInterval.current = setTimeout(() => setMountTranslate(false), 300)
 
-    return () => {
-      if (clearInterval.current) {
-        clearTimeout(clearInterval.current);
-        clearInterval.current = null;
-      }
-    };
-  }, [isLoaded]);
+        return () => {
+            if (clearInterval.current) {
+                clearTimeout(clearInterval.current)
+                clearInterval.current = null
+            }
+        }
+    }, [isLoaded])
 
+    return (
+        <>
+            <div className={`${props.isLoaded ? `${!props.disableTransform && `${mountTranslate ? 'translate-y-0' : ''}`} opacity-100` : `${!props.disableTransform && 'translate-y-1'} opacity-0`} transition ease-in-out duration-200`}>{props.isLoaded ? props.children : ''}</div>
+            {!props.disableTransform && !props.isLoaded ? <Loading isPartial={props.isPartial} /> : ''}
+        </>
+    )
+}
 
-  return (
-    <>
-      <div className={`${props.isLoaded ? `${!props.disableTransform && `${mountTranslate ? 'translate-y-0' : ''}`} opacity-100` : `${!props.disableTransform && 'translate-y-1'} opacity-0`} transition ease-in-out duration-200`}>{props.isLoaded ? props.children : ''}</div>
-      {!props.disableTransform && !props.isLoaded ? <Loading isPartial={props.isPartial} /> : ''}
-    </>
-  );
-};
-
-export default LoadContent;
+export default LoadContent

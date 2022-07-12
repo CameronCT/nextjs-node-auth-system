@@ -1,28 +1,26 @@
 ._formField {
-  @apply 
-    flex w-full
+    @apply flex w-full
     border-2 border-gray-300
     rounded-lg
     overflow-hidden
     hover:border-gray-500 focus:border-gray-600
-    transition ease-in-out duration-300
-  ;
+    transition ease-in-out duration-300;
 }
 
 ._formField div {
-  @apply w-12 my-auto text-sm;
+    @apply w-12 my-auto text-sm;
 }
 
 ._formField div > svg {
-  @apply w-4 mx-auto;
+    @apply w-4 mx-auto;
 }
 
-._formField input, 
+._formField input,
 ._formField select,
 ._formField textarea {
-  @apply focus:outline-none w-full block pr-2 py-2;
+    @apply focus:outline-none w-full block pr-2 py-2;
 }
 
 ._formField.is-invalid {
-  @apply border-red-700;
+    @apply border-red-700;
 }

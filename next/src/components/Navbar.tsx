@@ -1,6 +1,6 @@
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import Input from "./Forms/Input";
-import Userbar from "./Userbar";
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import Input from './Forms/Input'
+import Userbar from './Userbar'
 
 const Navbar = () => {
     return (
@@ -21,4 +21,4 @@ const Navbar = () => {
     )
 }
 
-export default Navbar;
+export default Navbar
