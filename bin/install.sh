@@ -1,4 +1,4 @@
-npm ci &
-cd ./next && npm ci &
-cd ./server && npm ci &
+npm i &
+cd ./next && npm i &
+cd ./server && npm i &
 wait

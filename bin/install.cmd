@@ -1,7 +1,7 @@
-call npm ci
+call npm i
 cd .\next
-call npm ci
+call npm i
 cd ..\server
-call npm ci
+call npm i
 cd ..\
 PAUSE

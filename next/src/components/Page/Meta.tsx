@@ -2,6 +2,7 @@ import { NextSeo } from 'next-seo'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import Config from '../../Config'
+import { config, dom } from "@fortawesome/fontawesome-svg-core";
 
 type IMetaProps = {
     title: string
@@ -17,6 +18,8 @@ const Meta = (props: IMetaProps) => {
     const useTitle = props.reverseTitle ? `${props.title} - ${Config.name}` : `${Config.name} - ${props.title}`
     const useDescription = props.description || Config.seo.description
 
+    config.autoAddCss = false;
+
     return (
         <>
             <Head>
@@ -29,6 +32,7 @@ const Meta = (props: IMetaProps) => {
                 <link rel="icon" href={`${router.basePath}/favicon/favicon.ico`} key="favicon" />
                 <link rel="manifest" href="/site.webmanifest"></link>
                 <title>{useTitle}</title>
+                <style>{dom.css()}</style>
             </Head>
             <NextSeo
                 title={useTitle}

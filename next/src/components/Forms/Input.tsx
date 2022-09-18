@@ -26,7 +26,7 @@ interface IProps {
 }
 
 const Input = (props: IProps) => {
-    const { className, type, name, label, value, defaultValue, minimumValue, maximumValue, options, regex, condition, required, onChange } = props
+    const { className, type, name, label, value, minimumValue, maximumValue, options, regex, required, onChange } = props
 
     const [error, setError] = useState<string>('')
 
@@ -38,7 +38,7 @@ const Input = (props: IProps) => {
     const handleOnBlur = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         if (e.target.value) {
             if (regex && !new RegExp(regex.pattern).test(e.target.value)) setError(regex?.message! || 'Invalid value, please try again.')
-            else if (condition && !condition.pattern) setError(condition?.message! || 'Invalid value, please try again.')
+            else if (regex && !regex.pattern) setError(regex?.message! || 'Invalid value, please try again.')
             else if (minimumValue && maximumValue && (e.target.value.length < minimumValue || e.target.value.length > maximumValue)) setError(`Must be between ${minimumValue} and ${maximumValue} characters.`)
             else setError('')
         } else {

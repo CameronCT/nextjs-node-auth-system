@@ -70,7 +70,7 @@ const login = async (req: RequestWithJWT, res: Response) => {
                     `Please confirm your email address`,
                     `
                         Welcome to ${Config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
-                        <b><a href="${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}">${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
+                        <b><a href="${Config.api.webUrl}/auth/activate/${response}">${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
                         If you have any issues or have any other questions, please contact ${Config.emailAddress}!
                     `
                 )
@@ -105,7 +105,7 @@ const signup = async (req: RequestWithJWT, res: Response) => {
                 `Please confirm your email address`,
                 `
                     Welcome to ${Config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
-                    <b><a href="${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}">${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
+                    <b><a href="${Config.api.webUrl}/auth/activate/${response}">${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
                     If you have any issues or have any other questions, please contact ${Config.emailAddress}!
                 `
             )
@@ -129,7 +129,7 @@ const sendForgot = async (req: RequestWithJWT, res: Response) => {
             `Reset your password`,
             `
                 You have requested to reset your password, please click the link below to reset your password.<br/><br/>
-                <b><a href="${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/forgot/${response}">${Config.api.secure ? 'https' : 'http'}://${Config.api.webUrl}/auth/forgot/${response}</a></b><br/><br/>
+                <b><a href="${Config.api.webUrl}/auth/forgot/${response}">${Config.api.webUrl}/auth/forgot/${response}</a></b><br/><br/>
                 If you did not make this request, you may contact ${Config.emailAddress} or simply ignore it.
             `
         )

@@ -16,7 +16,7 @@ export interface OAuth {
 
 const payload: OAuth = {
     Discord: {
-        Client: '123',
+        Client: '995942101382615080',
         Secret: String(process.env.OAUTH_DISCORD || ''),
         Callback: `${Config.api.oauthUrl}/auth/discord/callback`,
     },
