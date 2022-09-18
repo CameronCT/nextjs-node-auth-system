@@ -52,7 +52,7 @@ const Input = (props: IProps) => {
             <div className={`_formField ${error ? 'is-invalid' : 'is-valid'}`}>
                 {props.icon && (
                     <div>
-                        <FontAwesomeIcon icon={props.icon} size="sm" />
+                        <FontAwesomeIcon icon={props.icon} />
                     </div>
                 )}
                 {['text', 'password', 'email', 'tel'].includes(type) && <input type={type} name={name} value={value || ''} minLength={minimumValue} maxLength={maximumValue} placeholder={label} onChange={handleUpdate} onBlur={handleOnBlur} />}

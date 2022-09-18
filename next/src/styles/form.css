@@ -8,11 +8,7 @@
 }
 
 ._formField div {
-    @apply w-12 my-auto text-sm;
-}
-
-._formField div > svg {
-    @apply w-4 mx-auto;
+    @apply w-12 my-auto text-center text-lg;
 }
 
 ._formField input,
