@@ -1,4 +1,5 @@
 const Config = {
+    appId: 'nnas',
     name: 'NNAS',
     apiUrl: 'http://localhost:8080/api',
     authUrl: 'http://localhost:8080/auth',

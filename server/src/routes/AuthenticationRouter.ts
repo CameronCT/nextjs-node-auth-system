@@ -9,6 +9,7 @@ import AuthenticationService from '../services/AuthenticationService'
 import getSessionToken from '../utils/getSessionToken'
 import getCSRFToken from '../utils/getCSRFToken'
 import AppService from '../services/AppService'
+import config from '../config'
 
 const profileLoginFinalized = async (req: RequestWithJWT, res: Response, user: any, isUpdate: boolean = false) => {
     if (!user) return AppService.send(res, 'Unable to find profile on callback!', null, 422)
@@ -19,7 +20,7 @@ const profileLoginFinalized = async (req: RequestWithJWT, res: Response, user: a
     const jwtToken = AuthenticationService.jwtCreate(user)
 
     // Tokens
-    res.cookie('accountSession', jwtToken, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure })
+    res.cookie(`accountSession[${config.appId}]`, jwtToken, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure })
 
     // Add Logs
     if (!isUpdate) await AccountLogService.add(user.accountId, 'logged_in', Host.getAddress(req))
@@ -42,7 +43,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
             if (Config.options.enableGuests) {
                 const createGuest = await AuthenticationService.guestCreate().catch((e) => AppService.error('router', e))
                 if (createGuest?.data) {
-                    res.cookie('accountSession', createGuest?.token, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure })
+                    res.cookie(`accountSession[${config.appId}]`, createGuest?.token, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure })
                     return AppService.sendDefault(res, { data: createGuest?.data, token: createGuest?.token, csrf: getCSRFToken(req) })
                 } else return AppService.send(res, 'Unable to create Guest!', null, 422)
             } else return AppService.send(res, 'Unable to authenticate!', null, 422)
@@ -51,7 +52,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
 }
 
 const logout = async (_req: RequestWithJWT, res: Response) => {
-    res.clearCookie('accountSession', { domain: Config.api.cookieUrl })
+    res.clearCookie(`accountSession[${config.appId}]`, { domain: Config.api.cookieUrl })
     return AppService.send(res, 'ok', {})
 }
 

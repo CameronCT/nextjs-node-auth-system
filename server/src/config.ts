@@ -1,4 +1,5 @@
 interface ConfigProps {
+    appId: string
     name: string
     emailAddress: string
     options: {
@@ -28,6 +29,7 @@ interface ConfigProps {
 }
 
 const Config: ConfigProps = {
+    appId: 'nnas',
     name: 'My First App',
     emailAddress: 'support@example.io',
     options: {
