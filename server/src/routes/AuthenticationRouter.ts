@@ -4,7 +4,6 @@ import { RequestWithJWT } from '../types'
 import AccountLogService from '../services/AccountLogService'
 import Validate from '../utils/Validate'
 import sendMail from '../utils/sendMail'
-import Config from '../config'
 import AuthenticationService from '../services/AuthenticationService'
 import getSessionToken from '../utils/getSessionToken'
 import getCSRFToken from '../utils/getCSRFToken'
@@ -20,7 +19,7 @@ const profileLoginFinalized = async (req: RequestWithJWT, res: Response, user: a
     const jwtToken = AuthenticationService.jwtCreate(user)
 
     // Tokens
-    res.cookie(`accountSession[${config.appId}]`, jwtToken, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure })
+    res.cookie(`accountSession[${config.appId}]`, jwtToken, { maxAge: config.jwt.expiry, domain: config.api.cookieUrl, secure: config.api.secure })
 
     // Add Logs
     if (!isUpdate) await AccountLogService.add(user.accountId, 'logged_in', Host.getAddress(req))
@@ -32,7 +31,7 @@ const PassportCallback = async (req: RequestWithJWT, res: Response) => {
     const response = await profileLoginFinalized(req, res, req.user)
     if (response) {
         // Resolve
-        res.writeHead(301, { Location: Config.api.webUrl + '/' })
+        res.writeHead(301, { Location: config.api.webUrl + '/' })
         res.end()
     } else return AppService.send(res, 'Unable to authenticate!', null, 422)
 }
@@ -40,10 +39,10 @@ const PassportCallback = async (req: RequestWithJWT, res: Response) => {
 const session = async (req: RequestWithJWT, res: Response) => {
     AuthenticationService.jwtValidate(getSessionToken(req), async (httpCode, data) => {
         if (httpCode !== 200 || !data) {
-            if (Config.options.enableGuests) {
+            if (config.options.enableGuests) {
                 const createGuest = await AuthenticationService.guestCreate().catch((e) => AppService.error('router', e))
                 if (createGuest?.data) {
-                    res.cookie(`accountSession[${config.appId}]`, createGuest?.token, { maxAge: Config.jwt.expiry, domain: Config.api.cookieUrl, secure: Config.api.secure })
+                    res.cookie(`accountSession[${config.appId}]`, createGuest?.token, { maxAge: config.jwt.expiry, domain: config.api.cookieUrl, secure: config.api.secure })
                     return AppService.sendDefault(res, { data: createGuest?.data, token: createGuest?.token, csrf: getCSRFToken(req) })
                 } else return AppService.send(res, 'Unable to create Guest!', null, 422)
             } else return AppService.send(res, 'Unable to authenticate!', null, 422)
@@ -52,7 +51,7 @@ const session = async (req: RequestWithJWT, res: Response) => {
 }
 
 const logout = async (_req: RequestWithJWT, res: Response) => {
-    res.clearCookie(`accountSession[${config.appId}]`, { domain: Config.api.cookieUrl })
+    res.clearCookie(`accountSession[${config.appId}]`, { domain: config.api.cookieUrl })
     return AppService.send(res, 'ok', {})
 }
 
@@ -70,9 +69,9 @@ const login = async (req: RequestWithJWT, res: Response) => {
                     emailAddress,
                     `Please confirm your email address`,
                     `
-                        Welcome to ${Config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
-                        <b><a href="${Config.api.webUrl}/auth/activate/${response}">${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
-                        If you have any issues or have any other questions, please contact ${Config.emailAddress}!
+                        Welcome to ${config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
+                        <b><a href="${config.api.webUrl}/auth/activate/${response}">${config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
+                        If you have any issues or have any other questions, please contact ${config.emailAddress}!
                     `
                 )
             }
@@ -100,18 +99,18 @@ const signup = async (req: RequestWithJWT, res: Response) => {
 
     const response = await AuthenticationService.basicSignUp(emailAddress, password, displayName)
     if (response) {
-        if (Config.options.enableActivation) {
+        if (config.options.enableActivation) {
             await sendMail(
                 emailAddress,
                 `Please confirm your email address`,
                 `
-                    Welcome to ${Config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
-                    <b><a href="${Config.api.webUrl}/auth/activate/${response}">${Config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
-                    If you have any issues or have any other questions, please contact ${Config.emailAddress}!
+                    Welcome to ${config.name}! In order to login, please activate your account by clicking the link below.<br/><br/>
+                    <b><a href="${config.api.webUrl}/auth/activate/${response}">${config.api.webUrl}/auth/activate/${response}</a></b><br/><br/>
+                    If you have any issues or have any other questions, please contact ${config.emailAddress}!
                 `
             )
-            return AppService.send(res, Config.options.enableActivation ? 'Your account has been created, please check your email inside of your inbox or spam/junk folder for a confirmation email!' : 'Your account has been created!', {
-                enableActivation: Config.options.enableActivation,
+            return AppService.send(res, config.options.enableActivation ? 'Your account has been created, please check your email inside of your inbox or spam/junk folder for a confirmation email!' : 'Your account has been created!', {
+                enableActivation: config.options.enableActivation,
             })
         }
         return AppService.send(res, 'Your account has been created, you may now login!')
@@ -130,8 +129,8 @@ const sendForgot = async (req: RequestWithJWT, res: Response) => {
             `Reset your password`,
             `
                 You have requested to reset your password, please click the link below to reset your password.<br/><br/>
-                <b><a href="${Config.api.webUrl}/auth/forgot/${response}">${Config.api.webUrl}/auth/forgot/${response}</a></b><br/><br/>
-                If you did not make this request, you may contact ${Config.emailAddress} or simply ignore it.
+                <b><a href="${config.api.webUrl}/auth/forgot/${response}">${config.api.webUrl}/auth/forgot/${response}</a></b><br/><br/>
+                If you did not make this request, you may contact ${config.emailAddress} or simply ignore it.
             `
         )
     }
@@ -152,7 +151,7 @@ const forgot = async (req: RequestWithJWT, res: Response) => {
             `Your password has been changed`,
             `
                 You have successfully changed your password!<br/><br/>
-                If you did not perform this request, please contact ${Config.emailAddress} immediately!
+                If you did not perform this request, please contact ${config.emailAddress} immediately!
             `
         )
         return AppService.send(res, 'Your password has been changed!')

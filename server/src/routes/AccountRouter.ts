@@ -1,9 +1,22 @@
 import { Response } from 'express'
+import config from '../config'
+import AccountLogService from '../services/AccountLogService'
 import AccountService from '../services/AccountService'
 import AppService from '../services/AppService'
 import { RequestWithJWT } from '../types'
 import Validate from '../utils/Validate'
 import AuthenticationRouter from './AuthenticationRouter'
+
+const getByUrl = async (req: RequestWithJWT, res: Response) => {
+    const { url } = req.query
+
+    if (!url) 
+        return AppService.send(res, 'Invalid request!', null, 422)
+
+    const response = await AccountService.getByUrl(String(url))
+    if (response) return AppService.send(res, 'ok', response)
+    else return AppService.send(res, 'Unable to find your profile!', null, 422)
+};
 
 const update = async (req: RequestWithJWT, res: Response) => {
     const { displayName, avatarSrc } = req.body
@@ -20,4 +33,22 @@ const update = async (req: RequestWithJWT, res: Response) => {
     } else return AppService.send(res, 'Unable to validate your request, please make sure all fields are filled correctly!', null, 422)
 }
 
-export default { update }
+const gdpr = async (req: RequestWithJWT, res: Response) => {
+    return AppService.send(res, 'ok', { 
+        accountData: await AccountService.getOne(String(req.jwtSession?.accountId)),
+        logData: await AccountLogService.getByAccountId(String(req.jwtSession?.accountId))
+     })
+};
+
+const remove = async (req: RequestWithJWT, res: Response) => {
+    if (!req.jwtSession?.accountId) return AppService.send(res, 'Invalid session!', null, 422)
+
+    const response = await AccountService.remove(String(req.jwtSession?.accountId))
+    if (response) {
+        res.clearCookie(`accountSession[${config.appId}]`, { domain: config.api.cookieUrl })
+        return AppService.send(res, 'ok', response)
+    }
+    else return AppService.send(res, 'Unable to validate your request, please make sure all fields are filled correctly!', null, 422)
+};
+
+export default { getByUrl, update, gdpr, remove }

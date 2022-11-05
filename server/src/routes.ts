@@ -2,16 +2,21 @@ import express from 'express'
 import passport from 'passport'
 
 import useRatelimit from './middlewares/useRatelimit'
+import useSession from './middlewares/useSession'
 import validateCSRF from './middlewares/validateCSRF'
+import AccountRouter from './routes/AccountRouter'
 
 import AuthenticationRouter from './routes/AuthenticationRouter'
 
 const start = (app: express.Express) => {
     const authRouter = express.Router()
+    const profileRouter = express.Router()
 
     // Auth
     authRouter.get('/session', useRatelimit.sessionRequest, AuthenticationRouter.session)
+    authRouter.get('/gdpr', useRatelimit.sessionRequest, useSession, AccountRouter.gdpr);
     authRouter.get('/logout', useRatelimit.sessionUpdate, AuthenticationRouter.logout)
+    authRouter.get('/remove', useRatelimit.sessionRequest, useSession, AccountRouter.remove);
 
     // Auth -> Basic
     authRouter.post('/login', useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.login)
@@ -29,7 +34,11 @@ const start = (app: express.Express) => {
     authRouter.get('/github', passport.authenticate('github'))
     authRouter.get('/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/userinfo.profile', 'https://www.googleapis.com/auth/userinfo.email'] }))
 
+    // Profile
+    profileRouter.get('/', useRatelimit.standardGetRequest, AccountRouter.getByUrl)
+
     app.use('/auth', authRouter)
+    app.use('/profile', profileRouter)
 }
 
 export default { start }
