@@ -60,8 +60,8 @@ const Modal = (props: IProps) => {
         >
             <div className={`modal-bg flex h-screen transform transition-all ease-in-out duration-300 ${props.isOpened ? 'translate-y-0' : 'translate-y-1'}`}>
                 <div className={`modal-bg ${sizeCSS} m-auto relative`}>
-                    <div className={`${props.className || 'bg-gray-775 p-8'} w-full rounded-2xl shadow-lg relative`}>
-                        <button type="button" className="focus:outline-none text-2xl text-white text-opacity-70 hover:text-opacity-40 absolute top-2 right-2.5 transition">
+                    <div className={`${props.className || 'bg-white p-8'} w-full rounded-2xl shadow-lg relative`}>
+                        <button type="button" className="focus:outline-none text-2xl text-black text-opacity-70 hover:text-opacity-40 absolute top-2 right-4 transition">
                             <FontAwesomeIcon icon={faTimes} onClick={props.onClose} />
                         </button>
                         {props.children}
