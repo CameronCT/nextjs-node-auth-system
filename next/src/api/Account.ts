@@ -15,16 +15,10 @@ const getByUrl = async (url: string): Promise<AxiosResponse | null> => {
   return response?.data || null
 }
 
-const gdpr = async (): Promise<AxiosResponse | null> => {
-  const response = await axios.get(`${Config.authUrl}/gdpr`, {}).catch((e) => toast.error(e.response.data.message))
+const update = async (formData: { [key: string]: string }): Promise<AxiosResponse | null> => {
+  const response = await axios.post(`${Config.apiUrl}/profile/update`, { ...formData, _csrf: Authentication.getCSRFToken() }).catch((e) => toast.error(e.response.data.message))
   // @ts-ignore
   return response?.data || null
 }
 
-const remove = async (): Promise<AxiosResponse | null> => {
-  const response = await axios.post(`${Config.authUrl}/remove`, { _csrf: Authentication.getCSRFToken() }).catch((e) => toast.error(e.response.data.message))
-  // @ts-ignore
-  return response?.data || null
-}
-
-export default { getByUrl, gdpr, remove };
+export default { getByUrl, update };

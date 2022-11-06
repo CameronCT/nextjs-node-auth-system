@@ -70,10 +70,17 @@ const recoveryPassword = async (emailAddress: string, password: string, key: str
     return response?.data || null
 }
 
+const remove = async (): Promise<AxiosResponse | null> => {
+    const response = await axios.post(`${Config.authUrl}/remove`, { _csrf: Authentication.getCSRFToken() }).catch((e) => toast.error(e.response.data.message))
+    // @ts-ignore
+    return response?.data || null
+}
+
 export default {
     login,
     register,
     activate,
     recoveryForgot,
     recoveryPassword,
+    remove
 }

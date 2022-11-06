@@ -5,6 +5,7 @@
 @import url('./auth.css');
 @import url('./form.css');
 @import url('./heading.css');
+@import url('./buttons.css');
 
 body {
     @apply font-sans;

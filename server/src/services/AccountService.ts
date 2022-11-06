@@ -1,6 +1,6 @@
 import MongoSQL from '../utils/MongoSQL'
 
-const update = async (accountId: string, displayName: string, avatarSrc: string) => await MongoSQL.findOneAndUpdate('accounts', { accountId }, { displayName, avatarSrc }).catch((e: string) => console.log(e))
+const update = async (accountId: string, displayName: string) => await MongoSQL.findOneAndUpdate('accounts', { accountId }, { displayName }).catch((e: string) => console.log(e))
 const getOne = async (accountId: string) => await MongoSQL.findOne('accounts', { accountId }).catch((e: string) => console.log(e))
 const getByUrl = async (url: string) => await MongoSQL.findOne('accounts', { accountId: url }, { projection: { _id: 0, displayName: 1, avatarSrc: 1 }}).catch((e: string) => console.log(e))
 

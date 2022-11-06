@@ -9,6 +9,7 @@ import getSessionToken from '../utils/getSessionToken'
 import getCSRFToken from '../utils/getCSRFToken'
 import AppService from '../services/AppService'
 import config from '../config'
+import AccountService from '../services/AccountService'
 
 const profileLoginFinalized = async (req: RequestWithJWT, res: Response, user: any, isUpdate: boolean = false) => {
     if (!user) return AppService.send(res, 'Unable to find profile on callback!', null, 422)
@@ -174,4 +175,22 @@ const activate = async (req: RequestWithJWT, res: Response) => {
     } else return AppService.send(res, 'Unable to validate your request, please make sure all fields are filled correctly!', null, 422)
 }
 
-export default { profileLoginFinalized, PassportCallback, session, logout, login, signup, forgot, sendForgot, activate }
+const gdpr = async (req: RequestWithJWT, res: Response) => {
+    return AppService.send(res, 'ok', { 
+        accountData: await AccountService.getOne(String(req.jwtSession?.accountId)),
+        logData: await AccountLogService.getByAccountId(String(req.jwtSession?.accountId))
+     })
+};
+
+const remove = async (req: RequestWithJWT, res: Response) => {
+    if (!req.jwtSession?.accountId) return AppService.send(res, 'Invalid session!', null, 422)
+
+    const response = await AccountService.remove(String(req.jwtSession?.accountId))
+    if (response) {
+        res.clearCookie(`accountSession[${config.appId}]`, { domain: config.api.cookieUrl })
+        return AppService.send(res, 'ok', response)
+    }
+    else return AppService.send(res, 'Unable to validate your request, please make sure all fields are filled correctly!', null, 422)
+};
+
+export default { profileLoginFinalized, PassportCallback, session, logout, login, signup, forgot, sendForgot, activate, gdpr, remove }

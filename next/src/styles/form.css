@@ -8,13 +8,13 @@
 }
 
 ._formField div {
-    @apply w-12 my-auto text-center text-lg;
+    @apply w-12 my-auto py-1.5 text-center text-lg bg-transparent bg-white;
 }
 
 ._formField input,
 ._formField select,
 ._formField textarea {
-    @apply focus:outline-none w-full block pr-2 py-2;
+    @apply focus:outline-none w-full block pr-2 py-2 bg-white;
 }
 
 ._formField.is-invalid {

@@ -14,9 +14,9 @@ const start = (app: express.Express) => {
 
     // Auth
     authRouter.get('/session', useRatelimit.sessionRequest, AuthenticationRouter.session)
-    authRouter.get('/gdpr', useRatelimit.sessionRequest, useSession, AccountRouter.gdpr);
+    authRouter.get('/gdpr', useRatelimit.sessionRequest, useSession, AuthenticationRouter.gdpr);
     authRouter.get('/logout', useRatelimit.sessionUpdate, AuthenticationRouter.logout)
-    authRouter.get('/remove', useRatelimit.sessionRequest, useSession, AccountRouter.remove);
+    authRouter.post('/remove', useRatelimit.sessionRequest, useSession, AuthenticationRouter.remove);
 
     // Auth -> Basic
     authRouter.post('/login', useRatelimit.sessionUpdate, validateCSRF, AuthenticationRouter.login)
@@ -36,6 +36,7 @@ const start = (app: express.Express) => {
 
     // Profile
     profileRouter.get('/', useRatelimit.standardGetRequest, AccountRouter.getByUrl)
+    profileRouter.post('/update', useRatelimit.sessionUpdate, useSession, validateCSRF, AccountRouter.update);
 
     app.use('/auth', authRouter)
     app.use('/profile', profileRouter)
