@@ -1,7 +1,7 @@
 const Config = {
     appId: 'nnas',
     name: 'NNAS',
-    apiUrl: 'http://localhost:8080/api',
+    apiUrl: 'http://localhost:8080',
     authUrl: 'http://localhost:8080/auth',
     seo: {
         keywords: '',
