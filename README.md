@@ -1,5 +1,11 @@
 # Next, Node & Auth System
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+
 Starter Script that includes Next, Node, Express & MongoDB and features a basic authentication system with emails and more.
+
+
 
 ## Table of Contents
   - [Features](#features)
