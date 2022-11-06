@@ -22,12 +22,14 @@ Starter Script that includes Next, Node, Express & MongoDB and features a basic 
 - Session Management with JWT
 - - Optional Guest Account Support
 - Email Support via SendGrid
-- Built in configured Nextjs frontend
+- Built-in configured Nextjs frontend
 - Built-in components & contexts for Authentication
 - - Including client-side error handling
+- Built-in GDPR and Deletion Process
 - Built-in SEO Support
 - Included Google Analytics tracking
 - Included Tailwind v3 with PostCSS
+- Included Profile & Settings page
 - Netlify deployment configured
 - Pre-configured Prettier and ESLint
 - Pre-configured CI/CD via PM2 & GitHub Actions
