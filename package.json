@@ -6,7 +6,7 @@
   "scripts": {
     "install:mac": "sh ./bin/install.sh",
     "install:linux": "sh ./bin/install.sh",
-    "install:win": ".\\bin\\install.cmd",
+    "install:win": "./bin/install.cmd",
     "dev:next": "cd next && npm run dev",
     "dev:server": "cd server && npm run dev",
     "dev": "concurrently --kill-others \"npm run dev:server\" \"npm run dev:next\"",
