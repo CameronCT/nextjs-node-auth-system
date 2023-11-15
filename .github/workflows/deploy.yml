@@ -3,7 +3,7 @@ name: Docker Production
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches: [BRANCH_HERE]
     paths: ['server/**', 'next/**', 'http/**']
 
 jobs:
