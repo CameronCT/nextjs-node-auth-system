@@ -8,6 +8,8 @@ Starter Script that includes Next, Node, Express & MongoDB and features a basic 
 
 
 ## Table of Contents
+- [Next, Node \& Auth System](#next-node--auth-system)
+  - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
@@ -19,7 +21,7 @@ Starter Script that includes Next, Node, Express & MongoDB and features a basic 
     - [Environmental Variables](#environmental-variables)
     - [CI/CD](#cicd)
     - [Nginx Reverse Proxy](#nginx-reverse-proxy)
-  - [Roadmap / Todo](#roadmap--todo)
+    - [Docker](#docker)
 
 ## Features
 - Easy configuration for both Front and Backend
@@ -41,6 +43,7 @@ Starter Script that includes Next, Node, Express & MongoDB and features a basic 
 - Pre-configured CI/CD via PM2 & GitHub Actions
 - Pre-configured dev/build scripts for Windows, macOS and Linux
 - Pre-configured Nginx Block support
+- Pre-configured Docker support
 
 ## Prerequisites
 - Node.js (v16.13 or later)
@@ -100,17 +103,18 @@ This is the only part **we can't** do for you, you will need to create a self-ho
 PM2 is a process management system that is used for both the front and backend. These aren't configured for use in development and are only configured to be used alongside CI/CD.
 
 ### Nginx Reverse Proxy
-Inside of `nginx.conf` you will find 5 server blocks. To give a brief description of this
+Inside of `./http/conf` you will find 4 server blocks across 2 configs. To give a brief description of this
 
 1. Backend Server 
-2. CDN/Files Server (for personal files)
+2. CDN/Files Server
 3. Next/Frontend Server
 4. Catch All Block
-5. Catch All Block
 
 This is not recommended for people who are not familiar with Nginx. However if you have basic knowledge then this base configuration will help you.
 
 **If you are only using this template for the frontend, then you can easily deploy via Netlify for free without having to go through the Nginx configuration.**
 
-## Roadmap / Todo
-- Docker Configuration
+### Docker
+There is now a quick 1-command option to build all of your docker images and launch them as located in `docker-compose.yml` 
+
+You can start a production build doing `npm run start:production`
