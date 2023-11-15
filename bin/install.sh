@@ -1,4 +1,4 @@
-npm i &
-cd ./next && npm i &
-cd ./server && npm i &
+yarn install &
+cd ./next && yarn install &
+cd ./server && yarn install &
 wait

@@ -5,7 +5,7 @@ class MongoSQL {
     static $mongoModels: string[]
 
     constructor(uri: string | null, listOfModels?: string[]) {
-        MongoSQL.$mongoConnection = MongoCreate(!uri ? 'mongodb://localhost:27017/newapp' : uri, {
+        MongoSQL.$mongoConnection = MongoCreate(!uri ? 'mongodb://127.0.0.1:27017/newapp' : uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
@@ -17,7 +17,7 @@ class MongoSQL {
             return MongoSQL.$mongoConnection
         }
         return
-        throw Error('Unable to connect to MongoDB from MongoSQL!')
+            throw Error('Unable to connect to MongoDB from MongoSQL!')
     }
 
     public static sanitize(v: any) {

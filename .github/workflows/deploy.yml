@@ -1,0 +1,43 @@
+name: Docker Production
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['server/**', 'next/**', 'http/**']
+
+jobs:
+  build:
+    runs-on: ['self-hosted', 'linux', 'x64']
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '18'
+
+      - name: Create ENV File on Next
+        run: |
+          rm .env.local || true
+          touch .env.local
+          echo NEXT_PUBLIC_ENV=production >> .env.local
+        working-directory: ./next
+
+      - name: Create ENV File on Server
+        run: |
+          rm .env || true
+          touch .env
+          echo NODE_ENV=production >> .env
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+          echo MONGODB_URL=${{ secrets.MONGODB_URL }} >> .env
+          echo EMAIL_PUBLIC=${{ secrets.EMAIL_PUBLIC }} >> .env
+          echo EMAIL_PRIVATE=${{ secrets.EMAIL_PRIVATE }} >> .env
+          echo OAUTH_DISCORD=${{ secrets.OAUTH_DISCORD }} >> .env
+          echo OAUTH_GOOGLE=${{ secrets.OAUTH_GOOGLE }} >> .env
+          echo OAUTH_GITHUB=${{ secrets.OAUTH_GITHUB }} >> .env
+        working-directory: ./server
+
+      - name: Run the Docker Container
+        run: npm run start:production
+        working-directory: ./

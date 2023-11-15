@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties, ReactElement } from 'react'
+import { ReactNode, CSSProperties } from 'react'
 import NextLink from 'next/link'
 
 interface IProps {
@@ -11,10 +11,8 @@ interface IProps {
 
 const Link = (props: IProps) => {
     return (
-        <NextLink href={props.to} passHref>
-            <a className={props.className} style={props.style} onClick={props.onClick}>
-                {props.children as ReactNode}
-            </a>
+        <NextLink style={props.style} className={props.className} href={props.to} onClick={props.onClick} passHref>
+            {props.children as ReactNode}
         </NextLink>
     )
 }

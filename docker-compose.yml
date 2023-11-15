@@ -1,0 +1,45 @@
+version: '3.7'
+
+name: my-app
+services:
+  nginx:
+    image: my-app-nginx
+    build:
+      dockerfile: ./http/Dockerfile
+      no_cache: true
+    networks:
+      - nginx_network
+    ports:
+      - "443:443" 
+      - "80:80" 
+    restart: always
+
+  backend:
+    image: my-app-backend
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      no_cache: true
+    networks:
+      - nginx_network
+    ports:
+      - "8080:8080"
+    restart: always
+
+  frontend:
+    image: my-app-frontend
+    depends_on:
+      - backend 
+    build:
+      context: ./next
+      dockerfile: Dockerfile
+      no_cache: true
+    networks:
+      - nginx_network
+    ports:
+      - "3000:3000"  
+    restart: always
+
+networks:
+  nginx_network:
+    external: true

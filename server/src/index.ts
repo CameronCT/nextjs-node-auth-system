@@ -26,8 +26,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cors(corsOptions))
 app.use(mongoSanitize())
-
-// Express Middlewares
 app.use(generateCSRF)
 
 // Mongo

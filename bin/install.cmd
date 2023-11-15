@@ -1,7 +1,7 @@
-call npm i
-cd .\next
-call npm i
-cd ..\server
-call npm i
-cd ..\
+call yarn install
+cd ../next
+call yarn install
+cd ../server
+call yarn install
+cd ../
 PAUSE

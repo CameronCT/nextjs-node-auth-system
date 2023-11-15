@@ -11,6 +11,5 @@
         "resolveJsonModule": true,
         "skipLibCheck": true
     },
-    "exclude": ["ecosystem.config.js"],
     "include": ["src/**/*"]
 }
