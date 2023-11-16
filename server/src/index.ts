@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import mongoSanitize from 'express-mongo-sanitize'
 import generateCSRF from './middlewares/generateCSRF'
 import corsOptions from './middlewares/corsOptions'
-import MongoSQL from './utils/MongoSQL'
+import MongoORM from '@cameronct/mongo-orm'
 import { Snowflake } from '@sapphire/snowflake'
 import Config from './config'
 import routes from './routes'
@@ -20,6 +20,9 @@ const app = express()
 if (process.env.NODE_ENV !== 'production') process.env.NODE_ENV = 'development'
 if (process.env.NODE_ENV === 'production') app.set('trust proxy', '1')
 
+// Mongo
+new MongoORM.Connection(process.env.MONGODB_URL ? process.env.MONGODB_URL : "");
+
 // App
 app.use(cookieParser())
 app.use(express.json())
@@ -27,9 +30,6 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cors(corsOptions))
 app.use(mongoSanitize())
 app.use(generateCSRF)
-
-// Mongo
-new MongoSQL(process.env.MONGODB_URL ? process.env.MONGODB_URL : null, ['accounts', 'accountLogs', 'serverLogging'])
 
 // Passport
 passport.start(app)

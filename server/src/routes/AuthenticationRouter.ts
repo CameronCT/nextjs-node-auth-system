@@ -38,17 +38,18 @@ const PassportCallback = async (req: RequestWithJWT, res: Response) => {
 }
 
 const session = async (req: RequestWithJWT, res: Response) => {
-    AuthenticationService.jwtValidate(getSessionToken(req), async (httpCode, data) => {
-        if (httpCode !== 200 || !data) {
-            if (config.options.enableGuests) {
-                const createGuest = await AuthenticationService.guestCreate().catch((e) => AppService.error('router', e))
-                if (createGuest?.data) {
-                    res.cookie(`accountSession[${config.appId}]`, createGuest?.token, { maxAge: config.jwt.expiry, domain: config.api.cookieUrl, secure: config.api.secure })
-                    return AppService.sendDefault(res, { data: createGuest?.data, token: createGuest?.token, csrf: getCSRFToken(req) })
-                } else return AppService.send(res, 'Unable to create Guest!', null, 422)
-            } else return AppService.send(res, 'Unable to authenticate!', null, 422)
-        } else return AppService.sendDefault(res, { ...data, token: getSessionToken(req), csrf: getCSRFToken(req) })
-    })
+    const data = AuthenticationService.jwtValidate(getSessionToken(req));
+
+    if (!data && config.options.enableGuests) {
+        const createGuest = await AuthenticationService.guestCreate().catch((e) => AppService.error('router', e))
+        if (createGuest?.data) {
+            res.cookie(`accountSession[${config.appId}]`, createGuest?.token, { maxAge: config.jwt.expiry, domain: config.api.cookieUrl, secure: config.api.secure })
+            return AppService.sendDefault(res, { data: createGuest?.data, token: createGuest?.token, csrf: getCSRFToken(req) })
+        } else return AppService.send(res, 'Unable to create Guest!', null, 422)
+    } else if (data)
+        return AppService.sendDefault(res, { ...data, token: getSessionToken(req), csrf: getCSRFToken(req) })
+
+    return AppService.send(res, 'Unable to authenticate!', null, 422);
 }
 
 const logout = async (_req: RequestWithJWT, res: Response) => {

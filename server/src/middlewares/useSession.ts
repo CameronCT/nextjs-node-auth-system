@@ -5,7 +5,7 @@ import { RequestWithJWT } from '../types'
 import getSessionToken from '../utils/getSessionToken'
 
 export default (req: RequestWithJWT, res: Response, next: NextFunction) => {
-    const getSession = AuthenticationService.jwtSimpleValidate(getSessionToken(req))
+    const getSession = AuthenticationService.jwtValidate(getSessionToken(req))
     if (getSession) {
         req.jwtSession = getSession.data
         next()
