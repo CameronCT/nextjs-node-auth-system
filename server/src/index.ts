@@ -5,7 +5,7 @@ import cookieParser from 'cookie-parser'
 import mongoSanitize from 'express-mongo-sanitize'
 import generateCSRF from './middlewares/generateCSRF'
 import corsOptions from './middlewares/corsOptions'
-import MongoORM from '@cameronct/mongo-orm'
+import MongoODM from '@cameronct/mongo-odm'
 import { Snowflake } from '@sapphire/snowflake'
 import Config from './config'
 import routes from './routes'
@@ -21,7 +21,7 @@ if (process.env.NODE_ENV !== 'production') process.env.NODE_ENV = 'development'
 if (process.env.NODE_ENV === 'production') app.set('trust proxy', '1')
 
 // Mongo
-new MongoORM.Connection(process.env.MONGODB_URL ? process.env.MONGODB_URL : "");
+new MongoODM.Connection(process.env.MONGODB_URL ? process.env.MONGODB_URL : "");
 
 // App
 app.use(cookieParser())

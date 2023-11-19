@@ -21,7 +21,7 @@
     },
     "homepage": "https://github.com/cameronct/nextjs-node-auth-system#readme",
     "dependencies": {
-        "@cameronct/mongo-orm": "^0.1.5-rc1",
+        "@cameronct/mongo-odm": "^0.1.8",
         "@rakered/mongo": "^1.6.0",
         "@sapphire/snowflake": "^3.5.1",
         "@sendgrid/mail": "^7.6.2",

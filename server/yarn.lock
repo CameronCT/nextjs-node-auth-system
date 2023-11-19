@@ -7,10 +7,10 @@
   resolved "https://registry.npmjs.org/@aashutoshrathi/word-wrap/-/word-wrap-1.2.6.tgz"
   integrity sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==
 
-"@cameronct/mongo-orm@^0.1.5-rc1":
-  version "0.1.5-rc1"
-  resolved "https://registry.yarnpkg.com/@cameronct/mongo-orm/-/mongo-orm-0.1.5-rc1.tgz#83ef1e69ed108fd90da25bf34996a29b547b0d07"
-  integrity sha512-fOuz9/+eu3mMjUdHUaP3juSRRokbW+U2s6g0B+IdE48aeRx41UFdSHGmNx7kut38vsYsD9VP7ZDVBfnGL5Yujw==
+"@cameronct/mongo-odm@^0.1.8":
+  version "0.1.8"
+  resolved "https://registry.npmjs.org/@cameronct/mongo-odm/-/mongo-odm-0.1.8.tgz"
+  integrity sha512-zZTqpwsmssQETMcUMTCM8jGFio0/jJBJOogFDAQgWERhJ9Qd055klUS2KET3hMBjUMmcj2RnCJSVRe3wqMUCbQ==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"

@@ -1,9 +1,9 @@
-import MongoORM from "@cameronct/mongo-orm";
+import MongoODM from "@cameronct/mongo-odm";
 
-const ServerLog = new MongoORM.Model("serverLogs", [
-    { name: "type", type: MongoORM.FieldTypes.String, required: true },
-    { name: "stack", type: MongoORM.FieldTypes.String, required: true },
-    { name: "date", type: MongoORM.FieldTypes.String, required: true },
+const ServerLog = new MongoODM.Model("serverLogs", [
+    { name: "type", type: MongoODM.FieldTypes.String, required: true },
+    { name: "stack", type: MongoODM.FieldTypes.String, required: true },
+    { name: "date", type: MongoODM.FieldTypes.String, required: true },
 ], [])
 
 export default ServerLog;
